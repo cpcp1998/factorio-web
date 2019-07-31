@@ -1,0 +1,82 @@
+.target-page {
+    background-color: #000000;
+    text-align: left;
+    padding: 20px
+}
+
+.productivity {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.productivity input {
+    margin-left: 1em;
+    color: #ffffff;
+    font-size: 20px;
+    background-color: #444444;
+    border: none;
+    width: 6em;
+}
+
+.target-config {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.target-config > .title {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.tag-list {
+    text-align: left;
+    background-color: #000000;
+    padding: 3px;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #000000;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.tag.big {
+    font-size: 24px;
+}
+
+.tag.active {
+    background-color: #888888;
+}
+
+.tag .title {
+    display: inline-block;
+    color: #ffffff;
+    margin-right: 20px;
+}
+
+.tag .delete {
+    display: inline-block;
+    color: #ffa500;
+    text-shadow: 1px 1px 1px #000000;
+}
+
+.page-container {
+    padding-top: 10px;
+    text-align: center;
+}
+
+.data-form {
+    padding-left: 4%;
+    padding-right: 4%;
+    background-color: #000000;
+    padding-bottom: 20%;
+    padding-top: 20px;
+}
