@@ -653,16 +653,35 @@ export function ResultList(props) {
         </tr>);
     }
     let items = [];
+    let itemsThroughput = [];
     let itemBalance = {};
+    let itemComsume = {};
+    let itemProduce = {};
+    let itemThroughput = {};
     for (const {amount, balance} of props.result) {
         for (const [item, value] of Object.entries(balance)) {
             itemBalance[item] = (itemBalance[item] || 0) + value * amount;
+            if (value * amount < 0) itemComsume[item] = (itemComsume[item] || 0) - value * amount;
+            if (value * amount > 0) itemProduce[item] = (itemProduce[item] || 0) + value * amount;
+            itemThroughput[item] = Math.max((itemComsume[item] || 0), (itemProduce[item] || 0))
         }
     }
     const maxAmount = Math.max(...Object.entries(itemBalance).map(([k, v]) => Math.abs(v)));
     for (const [item, amount] of Object.entries(itemBalance)) {
         if (Math.abs(amount) / maxAmount < 1e-12 || item.startsWith('resource')) continue;
         items.push(<tr key={item} className="machine-module-select-row">
+            <td className="recipe-list-cell"><Icon mapping={props.data.icon_mapping} value={item.split('@')[0]}
+                                                   className="item non-selectable"
+                                                   tooltip={(args) => {
+                                                       const info = tempMaterialInfo(props.data, args[0], args[1]);
+                                                       return <TagView title={info.name}/>;
+                                                   }} tooltipArgs={item.split('@')}/></td>
+            <td className="machine-select-cell"><span className="module-count">{amount.toPrecision(3)}</span></td>
+        </tr>);
+    }
+    for (const [item, amount] of Object.entries(itemThroughput)) {
+        if (Math.abs(amount) / maxAmount < 1e-12 || item.startsWith('resource')) continue;
+        itemsThroughput.push(<tr key={item} className="machine-module-select-row">
             <td className="recipe-list-cell"><Icon mapping={props.data.icon_mapping} value={item.split('@')[0]}
                                                    className="item non-selectable"
                                                    tooltip={(args) => {
@@ -690,6 +709,15 @@ export function ResultList(props) {
             </tr></thead>
             <tbody>
             {items}
+            </tbody>
+        </table>
+        <table style={{width: "100%"}}>
+            <thead><tr>
+                <th className="recipe-list-cell"><span className="table-title">物品</span></th>
+                <th className="machine-select-cell"><span className="table-title">每分钟吞吐量</span></th>
+            </tr></thead>
+            <tbody>
+            {itemsThroughput}
             </tbody>
         </table>
     </div>;
